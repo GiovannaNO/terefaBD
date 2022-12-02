@@ -180,32 +180,52 @@ INSERT INTO item_pedido VALUES (DEFAULT, '9', '18', '1', '100.00');
 INSERT INTO item_pedido VALUES (DEFAULT, '10', '19', '1', '100.00');
 INSERT INTO item_pedido VALUES (DEFAULT, '10', '20', '1', '100.00');
 
-SELECT * FROM cliente WHERE status = 'online' ORDER BY nome;
+/*1.Exiba a lista de clientes ativos em ordem alfabética*/
+SELECT * FROM cliente WHERE status = 'ATIVO' ORDER BY nome;
 
-SELECT * FROM cliente WHERE status = 'ofline';
+/*2.Exiba a lista de clientes inativos */
+SELECT * FROM cliente WHERE status = 'INATIVO';
 
+/*3.Exiba todos os produtos da categoria “Hidráulica”*/
 SELECT * FROM produto WHERE id_categoria = '2';
 
+/*4.Exiba todos os produtos com valor até R$ 200,00 */
 SELECT * FROM produto WHERE valor <= '200.00';
 
+/*5.Exiba o nome de todos os clientes do sexo Feminino (“F”)*/
 SELECT * FROM cliente WHERE sexo = 'F';
 
+/*6.Exiba a lista de pedidos deste mês */
 SELECT * FROM pedido WHERE MONTH(dt_pedido) = MONTH(NOW()) AND YEAR(dt_pedido) = YEAR(NOW());
 
+/*7.Exiba a lista dos pedidos de hoje */
 SELECT * FROM pedido WHERE dt_pedido = CURDATE();
 
+/*8.Exiba a Soma total dos pedidos do mês atual*/
 SELECT SUM(vl_total) FROM pedido WHERE MONTH(dt_pedido) = MONTH(NOW()) AND YEAR(dt_pedido) = YEAR(NOW());
 
+/*9.Exiba os itens do pedido 4*/
+SELECT * FROM item_pedido WHERE id_pedido ='4';
+
+/*10.Exiba os pedidos do cliente 2 */
 SELECT * FROM pedido WHERE id_cliente ='2';
 
-SELECT * FROM pedido WHERE id_cliente ='2';
+/*11.Exiba a lista de vendedores, informando a quantidade de vendas de cada um */
+SELECT v.nome, count(p.id_vendedor) AS quantidade FROM vendedor v INNER JOIN pedido p WHERE p.id_vendedor = v.cd;
+/*sei o que está errado mas não sei resolver, continuo tentando*/
 
-SELECT COUNT(*), v.nome FROM pedido p, vendedor v WHERE p.id_vendedor = '1';
-
-SELECT COUNT(*) FROM pedido AS p LEFT OUTER JOIN vendedor AS v on v.cd = p.id_vendedor;
-
+/*12.Exiba a lista de produtos com qtd inferior a 50 */
 SELECT nome FROM produto WHERE qtd < '50';
 
+/*13.Exiba a lista dos produtos mais comprados (em pedidos)*/
+SELECT nome FROM produto ORDER BY cd;
+/*vou ter que fazer a mesma engenhoca do ex11*/
+
+/*14.Exiba a média de valor dos produtos cadastrados */
+SELECT AVG(valor) FROM produto;
+
+/*15.Exiba o produto mais barato cadastrado */
 SELECT min(valor) FROM produto;
 
+/*16.Exiba o produto mais caro cadastrado*/
 SELECT max(valor) FROM produto;
